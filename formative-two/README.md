@@ -18,3 +18,4 @@ This system extends a blockchain-based attendance system with token transactions
 ```bash
 make clean
 make
+./blockchain_attendance
