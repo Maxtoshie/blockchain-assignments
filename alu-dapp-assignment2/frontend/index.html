@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ALU Digital Asset dApp</title>
+<link rel="stylesheet" href="css/style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="../alu-logo.png" alt="ALU logo" onerror="this.style.display='none'" />
+    <div>
+      <h1>ALU Digital Asset Registry</h1>
+      <span>Logo ownership &amp; verification, powered by smart contracts</span>
+    </div>
+  </div>
+  <div id="wallet-area">
+    <span id="network-pill" class="pill" style="display:none;"></span>
+    <span id="balance-pill" class="pill" style="display:none;"></span>
+    <span id="address-pill" class="pill" style="display:none;"></span>
+    <button id="connect-btn" class="primary">Connect Wallet</button>
+    <button id="disconnect-btn" class="secondary" style="display:none;">Disconnect</button>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="register">Register Logo</button>
+  <button class="tab-btn" data-tab="verify">Verify Logo (Public)</button>
+  <button class="tab-btn" data-tab="dashboard">Token Dashboard</button>
+</nav>
+
+<main>
+
+  <div id="wallet-warning" class="status-box error" style="margin-bottom:20px;"></div>
+
+  <!-- ============ PART A/B: REGISTER TAB ============ -->
+  <section id="tab-register" class="tab-panel active">
+
+    <div class="card">
+      <h2>1. Upload &amp; Hash a Logo File</h2>
+      <p class="hint">Everything happens in your browser — the file never leaves your device.</p>
+      <div class="field">
+        <label for="reg-file">Select an image file</label>
+        <input type="file" id="reg-file" accept="image/*" />
+      </div>
+      <img id="reg-preview" class="preview-img" style="display:none;" />
+      <div class="field" style="margin-top:14px;">
+        <label>Computed SHA-256 hash (bytes32)</label>
+        <div id="reg-hash" class="hash-box">No file selected yet.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2. Register Asset On-Chain</h2>
+      <p class="hint">Requires a connected wallet. You will be asked to approve a transaction.</p>
+      <div class="field">
+        <label for="reg-name">Asset name</label>
+        <input type="text" id="reg-name" placeholder="e.g. ALU Official Logo 2026" />
+      </div>
+      <div class="field">
+        <label for="reg-type">File type</label>
+        <input type="text" id="reg-type" placeholder="e.g. PNG" />
+      </div>
+      <button id="reg-submit" class="primary">Register Asset</button>
+      <div id="reg-status" class="status-box"></div>
+    </div>
+  </section>
+
+  <!-- ============ PART C: VERIFY TAB ============ -->
+  <section id="tab-verify" class="tab-panel">
+
+    <div class="card">
+      <h2>Verify by File Upload</h2>
+      <p class="hint">No wallet connection needed — this is a free, read-only check anyone can run.</p>
+      <div class="field">
+        <label for="verify-tokenid">Token ID to verify against</label>
+        <input type="number" id="verify-tokenid" value="1" min="1" />
+      </div>
+      <div class="field">
+        <label for="verify-file">Upload the logo file you want to check</label>
+        <input type="file" id="verify-file" accept="image/*" />
+      </div>
+      <button id="verify-file-btn" class="primary">Verify File</button>
+    </div>
+
+    <div class="card">
+      <h2>Verify by Hash</h2>
+      <div class="field">
+        <label for="verify-tokenid-2">Token ID to verify against</label>
+        <input type="number" id="verify-tokenid-2" value="1" min="1" />
+      </div>
+      <div class="field">
+        <label for="verify-hash-input">Paste a SHA-256 hash</label>
+        <input type="text" id="verify-hash-input" placeholder="0x..." />
+      </div>
+      <button id="verify-hash-btn" class="primary">Verify Hash</button>
+    </div>
+
+    <div id="verify-result" class="verify-result">
+      <span class="icon" id="verify-icon"></span>
+      <div class="headline" id="verify-headline"></div>
+      <div class="subline" id="verify-subline"></div>
+      <div id="verify-meta" style="margin-top:14px; font-size:13px;"></div>
+    </div>
+  </section>
+
+  <!-- ============ PART D: DASHBOARD TAB ============ -->
+  <section id="tab-dashboard" class="tab-panel">
+
+    <div class="card">
+      <h2>Ownership Overview</h2>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Total ALUT Supply</div>
+          <div class="value" id="stat-total-supply">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Your Balance</div>
+          <div class="value" id="stat-my-balance">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Your Ownership %</div>
+          <div class="value" id="stat-my-pct">—</div>
+        </div>
+      </div>
+
+      <h2 style="margin-top:24px;">Example Holders</h2>
+      <table class="dashboard-table">
+        <thead><tr><th>Wallet</th><th>Balance</th><th>Ownership %</th></tr></thead>
+        <tbody id="holders-table-body">
+          <tr><td colspan="3">Connect your wallet to load holder data.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" id="distribute-card" style="display:none;">
+      <h2>Distribute Shares <span class="owner-badge">Owner Only</span></h2>
+      <p class="hint">Send ALUT tokens to a stakeholder. Only the contract owner can do this.</p>
+      <div class="field">
+        <label for="dist-address">Recipient wallet address</label>
+        <input type="text" id="dist-address" placeholder="0x..." />
+      </div>
+      <div class="field">
+        <label for="dist-amount">Amount of ALUT tokens</label>
+        <input type="number" id="dist-amount" placeholder="e.g. 5000" min="0" />
+      </div>
+      <button id="dist-submit" class="primary">Distribute Shares</button>
+      <div id="dist-status" class="status-box"></div>
+    </div>
+
+    <div class="card" id="not-owner-card" style="display:none;">
+      <h2>Distribute Shares</h2>
+      <p class="muted-note">Only the contract owner wallet can distribute ALUT shares. Connect the owner wallet to access this form.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>ALU Digital Asset dApp — Assignment 2 · Built with ethers.js on Hardhat</footer>
+
+<script src="js/contract-config.js"></script>
+<script src="js/wallet.js"></script>
+<script src="js/hash.js"></script>
+<script src="js/register.js"></script>
+<script src="js/verify.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

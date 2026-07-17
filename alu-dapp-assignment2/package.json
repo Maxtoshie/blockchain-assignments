@@ -1,0 +1,29 @@
+{
+  "name": "alu-digital-assets-dapp",
+  "version": "2.0.0",
+  "description": "ALU Digital Asset Registry + Logo Token dApp (Assignment 2 - DApp Integration with Smart Contract)",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test",
+    "compile": "hardhat compile",
+    "node": "hardhat node",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "serve": "npx http-server frontend -p 8080 -c-1"
+  },
+  "keywords": [
+    "solidity",
+    "ethers",
+    "dapp",
+    "erc721",
+    "erc20"
+  ],
+  "author": "Maxtoshie",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.28.6"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.6.1"
+  }
+}

@@ -1,0 +1,88 @@
+[
+  {
+    "type": "constructor",
+    "inputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "event",
+    "name": "AssetRegistered",
+    "inputs": [
+      { "name": "tokenId", "type": "uint256", "indexed": true },
+      { "name": "assetName", "type": "string", "indexed": false },
+      { "name": "contentHash", "type": "bytes32", "indexed": true },
+      { "name": "registeredBy", "type": "address", "indexed": true }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "function",
+    "name": "registerAsset",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      { "name": "assetName", "type": "string" },
+      { "name": "fileType", "type": "string" },
+      { "name": "contentHash", "type": "bytes32" }
+    ],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "verifyLogoIntegrity",
+    "stateMutability": "view",
+    "inputs": [
+      { "name": "tokenId", "type": "uint256" },
+      { "name": "suppliedHash", "type": "bytes32" }
+    ],
+    "outputs": [
+      { "name": "isValid", "type": "bool" },
+      { "name": "message", "type": "string" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "getAsset",
+    "stateMutability": "view",
+    "inputs": [{ "name": "tokenId", "type": "uint256" }],
+    "outputs": [
+      {
+        "type": "tuple",
+        "components": [
+          { "name": "assetName", "type": "string" },
+          { "name": "fileType", "type": "string" },
+          { "name": "contentHash", "type": "bytes32" },
+          { "name": "registeredBy", "type": "address" },
+          { "name": "timestamp", "type": "uint256" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "ownerOf",
+    "stateMutability": "view",
+    "inputs": [{ "name": "tokenId", "type": "uint256" }],
+    "outputs": [{ "type": "address" }]
+  },
+  {
+    "type": "function",
+    "name": "name",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [{ "type": "string" }]
+  },
+  {
+    "type": "function",
+    "name": "symbol",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [{ "type": "string" }]
+  },
+  {
+    "type": "function",
+    "name": "balanceOf",
+    "stateMutability": "view",
+    "inputs": [{ "name": "owner", "type": "address" }],
+    "outputs": [{ "type": "uint256" }]
+  }
+]
