@@ -1,0 +1,448 @@
+/* =====================================================================
+   UjuziChain Design System
+   Palette: Baobab Ink / Savanna Gold / Acacia Teal / Clay / Sand
+   ===================================================================== */
+
+:root {
+  /* Color tokens */
+  --ink: #16213e;
+  --ink-soft: #23305a;
+  --gold: #e8a33d;
+  --gold-soft: #f4c877;
+  --teal: #1f8a70;
+  --teal-soft: #e4f5f0;
+  --clay: #c1502e;
+  --clay-soft: #fbe9e2;
+  --sand: #f2ecdd;
+  --sand-deep: #e8dfc8;
+  --paper: #fffdf8;
+  --charcoal: #22252b;
+  --charcoal-muted: #5a5f6b;
+  --line: rgba(22, 33, 62, 0.12);
+
+  /* Type */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  /* Layout */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-card: 0 2px 14px rgba(22, 33, 62, 0.08);
+  --shadow-raised: 0 8px 30px rgba(22, 33, 62, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--sand);
+  color: var(--charcoal);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+code,
+.mono {
+  font-family: var(--font-mono);
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--sand);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-raised);
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 8px 24px rgba(232, 163, 61, 0.35);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+}
+
+.btn-ghost:hover {
+  border-color: var(--ink);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---------------------------------------------------------------------
+   Cards & Surfaces
+   --------------------------------------------------------------------- */
+
+.card {
+  background: var(--paper);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--line);
+  padding: 24px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------------------
+   Status pills
+   --------------------------------------------------------------------- */
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.status-valid {
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+
+.status-revoked {
+  background: var(--clay-soft);
+  color: var(--clay);
+}
+
+/* ---------------------------------------------------------------------
+   Seal badge — the signature element
+   Circular wax-seal-style badge with institution name arced around the rim
+   --------------------------------------------------------------------- */
+
+.seal {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  flex-shrink: 0;
+}
+
+.seal svg {
+  width: 100%;
+  height: 100%;
+}
+
+.seal-ring {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2;
+}
+
+.seal-ring-inner {
+  fill: var(--ink);
+}
+
+.seal-text {
+  fill: var(--sand);
+  font-family: var(--font-mono);
+  font-size: 6.2px;
+  letter-spacing: 1.5px;
+}
+
+.seal-revoked .seal-ring {
+  stroke: var(--clay);
+}
+
+.seal-revoked .seal-ring-inner {
+  fill: var(--charcoal-muted);
+}
+
+/* ---------------------------------------------------------------------
+   App shell (dashboard layout)
+   --------------------------------------------------------------------- */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--ink);
+  color: var(--sand);
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sidebar-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--sand);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-link {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: rgba(242, 236, 221, 0.7);
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+  background: var(--ink-soft);
+  color: var(--sand);
+}
+
+.main-content {
+  padding: 40px 48px;
+  max-width: 1080px;
+}
+
+@media (max-width: 800px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+  }
+  .sidebar-nav {
+    flex-direction: row;
+  }
+  .main-content {
+    padding: 24px 20px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Landing page
+   --------------------------------------------------------------------- */
+
+.landing-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+}
+
+.hero {
+  padding: 60px 48px 80px;
+  max-width: 900px;
+}
+
+.hero-eyebrow {
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1.05;
+  margin-bottom: 24px;
+}
+
+.hero p {
+  font-size: 1.15rem;
+  color: var(--charcoal-muted);
+  max-width: 560px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.section {
+  padding: 60px 48px;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .hero,
+  .section,
+  .landing-nav {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Forms
+   --------------------------------------------------------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.field input,
+.field textarea {
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--line);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background: var(--paper);
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--teal);
+}
+
+.field-mono input {
+  font-family: var(--font-mono);
+}
+
+/* ---------------------------------------------------------------------
+   Transaction / loading states
+   --------------------------------------------------------------------- */
+
+.tx-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+
+.tx-pending {
+  background: var(--sand-deep);
+  color: var(--ink);
+}
+
+.tx-success {
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+
+.tx-error {
+  background: var(--clay-soft);
+  color: var(--clay);
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(22, 33, 62, 0.2);
+  border-top-color: var(--ink);
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
